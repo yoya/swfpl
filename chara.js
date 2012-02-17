@@ -1,0 +1,3 @@
+var SWFChara = function() {
+    ;
+}
