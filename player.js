@@ -7,8 +7,23 @@ function SWFPlayer(canvas_id) {
     this.load = function(url) {
         this.loader = new SWFLoader(url, chara, object, this);
     }
-    this.play = function() {
+    this.setBackgroundColor = function(color) {
+        this.backgroundColor = color;
+    }
+    this.play = function(player) {
+        if (typeof player === 'undefined') {
+            player = this;
+        }
         console.debug("SWFPlayer::play");
-        ;
+        if (typeof player.frameRate === 'undefined') {
+            setTimeout(player.play, 100, player);
+            return ;
+        }
+        player.playTick(player, 1000 / player.frameRate);
+    }
+    this.playTick = function(player, period) {
+//        console.debug("SWFPlayer::playTick:"+period);
+        setTimeout(player.playTick, period, player, period);
+        object.playTick(player, chara, canvas, action, event);
     }
 }
