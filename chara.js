@@ -22,11 +22,9 @@ var SWFChara = function() {
         var marker;
         var dqt = '', dht = '';
         while (marker = bitio.getUI16BE(2)) {
-            console.log(marker);
             switch (marker) {
               case SOI:
               case EOI:
-                console.debug("SOI or EOI");
                 break;
               default:
                 var len = bitio.getUI16BE(2);
@@ -34,13 +32,11 @@ var SWFChara = function() {
                 break;
               case SOF0:
               case SOF2:
-                console.debug("SOF0 or SOF2");
                 var len = bitio.getUI16BE(2);
                 bitio.incrementOffset(-4, 0);
                 var sof = bitio.getData(len + 2);
                 break;
               case DQT:
-                console.debug("DQT");
                 var len = bitio.getUI16BE(2);
                 bitio.incrementOffset(-4, 0);
                 dqt += bitio.getData(len + 2);
