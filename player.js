@@ -5,7 +5,7 @@ function SWFPlayer(canvas_id) {
     var action = new SWFAction();
     var event = new SWFEvent();
     this.load = function(url) {
-        this.loader = new SWFLoader(url, chara, object);
+        this.loader = new SWFLoader(url, chara, object, this);
     }
     this.play = function() {
         console.debug("SWFPlayer::play");
