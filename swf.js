@@ -453,7 +453,7 @@ var SWFDefineBitsJPEG = function(bs, tag_code, length) { // code:6, 21, 35
         this.AlphaDataOffset = bs.getUI32LE();
         imageDataLen = this.AlphaDataOffset;
     }
-	this.ImageData = bs.getData(imageDataLen);
+    this.ImageData = bs.getData(imageDataLen);
     if (tag_code === 35) { // DefineBitsJPEG3
         this.BitmapAlphaData = bs.getData(length - 2 - imageDataLen);
     }
@@ -463,7 +463,7 @@ var SWFJPEGTables = function(bs, tag_code, length) { // code:8
     this.tag_code = tag_code;
     this.tag_length =  length;
     var imageDataLen = length;
-	this.JPEGData = bs.getData(length);
+    this.JPEGData = bs.getData(length);
 }
 
 var SWFSetBackgroundColor = function(bs, tag_code, length) { // code:9
@@ -639,8 +639,8 @@ var SWFDefineSprite = function(bs, tag_code, length) { // code:39
     var parser = new SWFParser(null);
     this.tag_code = tag_code;
     this.tag_length =  length;
-	this.SpriteID = bs.getUI16LE();
-	this.FrameCount = bs.getUI16LE();
+    this.SpriteID = bs.getUI16LE();
+    this.FrameCount = bs.getUI16LE();
     this.ControlTags = parser.parseTags(bs);
 }
 
