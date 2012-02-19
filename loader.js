@@ -143,6 +143,7 @@ var SWFLoader = function(url, chara, object, player) {
 		break;
 	    case 12: // DoAction
 		tag = new SWFDoAction(bitio, tag_code, length);
+                object.appendTag(tag);
 		break;
 	    case 20: // DefineBitsLossless
 	    case 36: // DefineBitsLossless2
