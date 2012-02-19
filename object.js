@@ -3,7 +3,6 @@ var SWFObject = function() {
     var controlTags = []
     var controlTags_idx = 0;
     var currentFrame = 0;
-    var loop
     this.appendTag = function(tag) {
         controlTags.push(tag);
     }
