@@ -66,6 +66,9 @@ var SWFChara = function() {
         var img = new Image();
         characterData[tag.CharacterID] = {image:img};
     }
+    this.appendShapeTag = function(tag) {
+        ;
+    }
     this.appendSpriteTag = function(tag) {
         console.debug("SWFChara::appendSpriteTag");
         characterData[tag.SpriteID] = {FrameCount:tag.FrameCount, ControlTags:tag.ControlTags};
