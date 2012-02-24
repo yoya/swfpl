@@ -9,7 +9,7 @@ var SWFChara = function() {
     }
     this.appendJpegTag = function(tag) {
         console.debug("SWFChara::appendJpegTag");
-        var img = SWFJpeg(imagedata, jpegtables);
+        var img = SWFJpeg(tag.ImageData, jpegTables);
         characterData[tag.CharacterID] = {image:img};
     }
     this.appendLosslessTag = function(tag) {

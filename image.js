@@ -1,8 +1,8 @@
 
-function SWFJpeg(imagedata, jpegtables) {
+function SWFJpeg(imageData, jpegtables) {
     var img = new Image();
     var bitio = new BitIO();
-    bitio.input(tag.ImageData);
+    bitio.input(imageData);
     var marker;
     var dqt = '', dht = '';
     while (marker = bitio.getUI16BE(2)) {
