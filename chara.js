@@ -1,6 +1,9 @@
 var SWFChara = function() {
     var characterData = {}; // cid => {...};
     var jpegTables = null;
+    this.getCharacter = function(cid)  {
+        return characterData[cid];
+    }
     this.appendShapeTag = function(tag) {
         console.debug("SWFChara::appendShapeTag");
     }
