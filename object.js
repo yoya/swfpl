@@ -8,13 +8,15 @@ var SWFObject = function() {
         controlTags.push(tag);
     }
     this.showFrame = function(chara, canvas) {
-        n = displayListTable.length;
-        if (typeof n === 'undefined') {
-            return ; // nothing to do
-        }
-        var depthList = new Array(n);
+        console.log("showFrame");
+        console.log(displayListTable);
+        var depthList = [];
         for (var depth in displayListTable) {
-            depthList[i++] = depth;
+            depthList.push(depth);
+        }
+        if (typeof depthList[0] === 'undefined') {
+            console.log("depthList[0] === undefined");
+            return ; // nothing to do
         }
         depthList = depthList.sort();
         for (var i = 0, n = depthList.length ; i < n ; i++) {
@@ -24,7 +26,7 @@ var SWFObject = function() {
             var place = displayListTable[depth];
             console.log(place);
             var character = chara.getCharacter(place.CharacterId);
-            
+            console.log(character);
         }
     }
     this.playTick = function(player, chara, canvas, action, event) {
