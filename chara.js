@@ -6,6 +6,10 @@ var SWFChara = function() {
     }
     this.appendShapeTag = function(tag) {
         console.debug("SWFChara::appendShapeTag");
+	var vectors = new SWFVector(tag.Shapes.FillStyles.FillStyles,
+				   tag.Shapes.LineStyles.LineStyles,
+				   tag.Shapes.ShapeRecords);
+        characterData[tag.ShapeId] = {bounds:tag.ShapeBounds, vectors:vectors};
     }
     this.appendJpegTableTag = function(tag) {
         jpegTables = tag.JPEGData;
@@ -19,9 +23,6 @@ var SWFChara = function() {
         var img = new Image();
         
         characterData[tag.CharacterID] = {image:img};
-    }
-    this.appendShapeTag = function(tag) {
-        ;
     }
     this.appendSpriteTag = function(tag) {
         console.debug("SWFChara::appendSpriteTag");
