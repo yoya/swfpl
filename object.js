@@ -21,10 +21,10 @@ var SWFObject = function() {
         depthList = depthList.sort();
         for (var i = 0, n = depthList.length ; i < n ; i++) {
             var depth = depthList[i];
-            console.log('depth='+depth);
-            console.log(depthList);
+	    //            console.log('depth:'+depth);
+	    //            console.log(depthList);
             var place = displayListTable[depth];
-            console.log(place);
+            // console.log(place);
             var character = chara.getCharacter(place.CharacterId);
             console.log(character);
         }
