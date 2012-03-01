@@ -21,7 +21,8 @@ var SWFChara = function() {
     }
     this.appendLosslessTag = function(tag) {
         var img = new Image();
-        
+	pngData = SWFLossless(tag.tag_code, tag.BitmapFormat, tag.BitmapWidth, tag.BitmapHeight, tag.BitmapColorTableSize, tag.ZlibBitmapData);
+	img.src = "data:image/png;base64,"+base64encode(pngData);
         characterData[tag.CharacterID] = {image:img};
     }
     this.appendSpriteTag = function(tag) {
