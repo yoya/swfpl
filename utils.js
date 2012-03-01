@@ -2632,7 +2632,7 @@ var crc32 = function(str) {
 };
 
 window.zlib_inflate = zlib_inflate;
-// window.zlib_deflate = zlib_deflate;
+window.zlib_deflate = zlib_deflate;
 
 window.base64encode = base64encode;
 window.base64decode = base64decode;
