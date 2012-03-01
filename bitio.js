@@ -101,7 +101,14 @@ var BitIO = function() {
         }
         return value;
     }
-    
+
+    /*
+     * from
+     */
+    this.fromUI32BE = function(value) {
+        return String.fromCharCode(value >> 24) + String.fromCharCode((value >> 16) & 0xff) + String.fromCharCode((value >> 8) & 0xff) + String.fromCharCode(value & 0xff);
+    }
+
     /*
      * seek
      */
