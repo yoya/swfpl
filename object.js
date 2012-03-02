@@ -77,4 +77,13 @@ var SWFObject = function() {
             currentFrame++;
         }
     }
+    this.play = function(label) {
+	console.error("SWFObject::play: not implemented yet. ");
+    }
+    this.stop = function(label) {
+	console.error("SWFObject::stop: not implemented yet. ");
+    }
+    this.gotoLabel = function(label) {
+	console.error("SWFObject::gotoLabel: not implemented yet. ");
+    }
 }
