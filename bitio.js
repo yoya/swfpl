@@ -103,7 +103,21 @@ var BitIO = function() {
     }
 
     /*
-     * from
+     * convert to
+     */
+    this.toUI16LE = function(data) {
+        return  (data.charCodeAt(0) & 0xff) + ((data.charCodeAt(1) & 0xff) << 8);
+    }
+    this.toSI16LE = function(data) {
+	var value = this.toUI16LE(data);
+	if (value < 0x8000) {
+	    return value;
+	}
+	return value - 0x10000;
+    }
+
+    /*
+     * convert from
      */
     this.fromUI32BE = function(value) {
         return String.fromCharCode(value >> 24) + String.fromCharCode((value >> 16) & 0xff) + String.fromCharCode((value >> 8) & 0xff) + String.fromCharCode(value & 0xff);
