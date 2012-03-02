@@ -72,6 +72,16 @@ var SWFAction = function(object, parentAction) {
 		    stack.push(v);
 		}
 		break;
+	    case 0x99: // Jump
+		var branchOffset = bitio.toSI16LE(actionData);
+		bitio.incrementOffset(branchOffset, 0);
+		break;
+	    case 0x9d: // If
+		if (stack.pop()) {
+		    var branchOffset = bitio.toSI16LE(actionData);
+		    bitio.incrementOffset(branchOffset, 0);
+		}
+		break;
 	    default:
 		console.error('Unknown actionCode:'+actionCode);
 		break;
