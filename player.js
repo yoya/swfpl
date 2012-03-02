@@ -3,7 +3,7 @@ function SWFPlayer(canvas_id) {
     var canvas = new SWFCanvas(canvas_id);
     var object = new SWFObject();
     var action = new SWFAction();
-    var event = new SWFEvent();
+    var event = new SWFEvent(canvas_id);
     this.load = function(url) {
         this.loader = new SWFLoader(url, chara, object, this);
     }
