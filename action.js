@@ -57,7 +57,20 @@ var SWFAction = function(object, parentAction) {
 		object.gotoLabel(actionData);
 		break;
 	    case 0x96: // Push
-		stack.push(actionData);
+		var bitio2 = new BitIO();
+		bitio2.input(actionData);
+		while (bitio2.offset() < actionLength) {
+		    var v = null;
+		    switch (bitio2.getUI8()) {
+		    case 0: // string literal
+			v = bitio2.getDataUntil("\0");
+			break;
+		    case 1: // : floating-point literal
+			console.error('not imlemented yet. float');
+			v = bitio2.getData(4); // dummy;
+		    }
+		    stack.push(v);
+		}
 		break;
 	    default:
 		console.error('Unknown actionCode:'+actionCode);
