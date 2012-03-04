@@ -11,7 +11,7 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	var fillEdges = [position.x, position.y];
 	console.debug('fillStyle0:'+fillStyle0);
 	console.debug('fillStyle1:'+fillStyle1);
-	for (i = startOffset; i <= endOffset ; i++) {
+	for (var i = startOffset; i <= endOffset ; i++) {
 	    var record = shapeRecords[i];
 	    var hasEdges = false;
 	    if (record instanceof SWFSTRAIGHTEDGERECORD) {
@@ -54,14 +54,13 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	}
 	// combining edges by style
 	var fillEdgesList = [];
-	for (style in fillEdgesParts) {
+	for (var style in fillEdgesParts) {
 	    var fillEdges = fillEdgesParts[style];
 	    if (fillEdges.length <= 1) {
 		fillEdgesList.push(fillStyles[style - 1]);
 		fillEdgesList.push(fillEdges[0]);
 	    } else {
                 // combine edge
-		continue;
 	    }
 	    
 	}
@@ -77,7 +76,7 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	if (startOfShapeRecords.LineStyle) {
 	    lineStyle = shapeRecords[startOffset].LineStyle;
 	}
-	for (i = startOffset + 1 ; i <= endOffset ; i++) {
+	for (var i = startOffset + 1 ; i <= endOffset ; i++) {
 	    var record = shapeRecords[i];
 	    if (record instanceof SWFSTYLECHANGERECORD || (i === endOffset)) {
 		if ((('LineStyle' in record) || 
@@ -108,7 +107,7 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
     var fillStyles, lineStyles;
     var fillStyle0 = 0, fillStyle1 = 0, lineStyle = 0;
     var hasEdges = false;
-    for (i = 0, n = shapeRecords.length ; i < n ; i++) {
+    for (var i = 0, n = shapeRecords.length ; i < n ; i++) {
 	var record = shapeRecords[i];
 	if ((record instanceof SWFSTRAIGHTEDGERECORD) ||
 	    (record instanceof SWFCURVEDEDGERECORD)) {
@@ -122,10 +121,10 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 		endOffset = i - 1;
 		edgesWithFillStyles = convertFillEdges(shapeRecords, startOffset, endOffset, fillStyles, fillStyle0, fillStyle1, position);
 		edgesWithLineStyles = convertLineEdges(shapeRecords, startOffset, endOffset, lineStyles, lineStyle, position);
-                for (j = 0, m = edgesWithFillStyles.length ; j < m ; j++) {
+                for (var j = 0, m = edgesWithFillStyles.length ; j < m ; j++) {
                     fills.push(edgesWithFillStyles[j]);
                 }
-                for (j = 0, m = edgesWithLineStyles.length ; j < m ; j++) {
+                for (var j = 0, m = edgesWithLineStyles.length ; j < m ; j++) {
                     lines.push(edgesWithLineStyles[j]);
                 }
 		hasEdges = false;
