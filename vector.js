@@ -8,18 +8,21 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	console.debug("convertFillEdges: startOffset:"+startOffset+" endOffset:"+endOffset);
 	var fillEdgesParts = [];
 	var startOfRecord = shapeRecords[startOffset];
-	var fill0Edges = [position.x, position.y];
-	var fill1Edges = [position.x, position.y];
+	var fillEdges = [position.x, position.y];
 	console.debug('fillStyle0:'+fillStyle0);
 	console.debug('fillStyle1:'+fillStyle1);
 	for (i = startOffset; i <= endOffset ; i++) {
 	    var record = shapeRecords[i];
 	    var hasEdges = false;
 	    if (record instanceof SWFSTRAIGHTEDGERECORD) {
+		// StraightFlag:1 - Straight Edge
+		fillEdges.push(1, record.X, record.Y);
 		position.x = record.X;
 		position.y = record.Y;
 		hasEdges = true;
 	    } else if (record instanceof SWFCURVEDEDGERECORD) {
+		// StraightFlag:0 - CurvedEdge
+		fillEdges.push(0, record.ControlX, record.ControlY, record.AnchorX, record.AnchorY);
 		position.x = record.AnchorX;
 		position.y = record.AnchorY;
 		hasEdges = true;
@@ -30,6 +33,7 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 			fillEdgesParts[fillStyle0] = [];
 		    }
 		    fillEdgesParts[fillStyle0].push(record);
+		    fill1Edges = [position.x, position.y];
 		}
 		if (fillStyle1) {
 		    if (! (fillStyle1 in fillEdgesParts)) {
@@ -39,23 +43,27 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 		}
 	    }
 	    if ((record instanceof SWFSTYLECHANGERECORD) || (i === endOffset)) {
-		if (fillStyle0) {
-		    if (! (fillStyle0 in fillEdgesParts)) {
-			fillEdgesParts[fillStyle0] = [];
+		if (hasEdges && (fillEdges.length > 2)) {
+		    if (fillStyle0) {
+			if (! (fillStyle0 in fillEdgesParts)) {
+			    fillEdgesParts[fillStyle0] = [];
+			}
+			fillEdgesParts[fillStyle0].push(fillEdges);
 		    }
-		    fillEdgesParts[fillStyle0].push(record);
+		    if (fillStyle1) {
+			if (! (fillStyle1 in fillEdgesParts)) {
+			    fillEdgesParts[fillStyle1] = [];
+			}
+			fillEdgesParts[fillStyle1].push(fillEdges);
+		    }
+		    fillEdges = [];
 		}
-		if (fillStyle1) {
-		    if (! (fillStyle1 in fillEdgesParts)) {
-			fillEdgesParts[fillStyle1] = [];
-		    }
-		    fillEdgesParts[fillStyle1].push(record);
+		if ('MoveX' in record) {
+		    position.x = record.MoveX;
+		    position.y = record.MoveY;
 		}
-		if (i !== endOffset) {
-		    if ('MoveX' in record) {
-			position.x = record.MoveX;
-			position.y = record.MoveY;
-		    }
+		if (fillEdges.length === 0) {
+		    fillEdges = [position.x, position.y];
 		}
 	    }
 	}
