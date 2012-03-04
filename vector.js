@@ -122,6 +122,12 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 		endOffset = i - 1;
 		edgesWithFillStyles = convertFillEdges(shapeRecords, startOffset, endOffset, fillStyles, fillStyle0, fillStyle1, position);
 		edgesWithLineStyles = convertLineEdges(shapeRecords, startOffset, endOffset, lineStyles, lineStyle, position);
+                for (j = 0, m = edgesWithFillStyles.length ; j < m ; j++) {
+                    fills.push(edgesWithFillStyles[j]);
+                }
+                for (j = 0, m = edgesWithLineStyles.length ; j < m ; j++) {
+                    lines.push(edgesWithLineStyles[j]);
+                }
 		hasEdges = false;
 	    }
 	}
