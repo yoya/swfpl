@@ -5,6 +5,9 @@ var SWFObject = function() {
     var currentFrame = 0;
     var displayListTable = {}; // depth => ...
     var action = new SWFAction();
+    var playing = true;
+    var nextFrame = 0;
+    var labelTable;
     this.appendTag = function(tag) {
         controlTags.push(tag);
     }
@@ -16,7 +19,7 @@ var SWFObject = function() {
             depthList.push(depth);
         }
         if (typeof depthList[0] === 'undefined') {
-            console.log("depthList[0] === undefined");
+//            console.debug("depthList[0] === undefined");
             return ; // nothing to do
         }
         depthList = depthList.sort();
@@ -27,7 +30,8 @@ var SWFObject = function() {
             var place = displayListTable[depth];
             // console.log(place);
             var character = chara.getCharacter(place.CharacterId);
-            console.log(character);
+            console.debug('character:'+place.CharacterId);
+            console.debug(character);
         }
     }
     this.playTick = function(player, chara, canvas, action, event) {
@@ -79,8 +83,10 @@ var SWFObject = function() {
     }
     this.play = function(label) {
 	console.error("SWFObject::play: not implemented yet. ");
+        playing = true;
     }
     this.stop = function(label) {
+        playing = false;
 	console.error("SWFObject::stop: not implemented yet. ");
     }
     this.gotoLabel = function(label) {
