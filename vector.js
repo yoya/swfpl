@@ -4,56 +4,65 @@
 // line: {width: color}
 
 var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
-    var convertFillEdges = function(shapeRecords, startOffset, endOffset, fillStyles, fillStyle0, fillStyle1, position) {
+    var convertEdges = function(shapeRecords, startOffset, endOffset, fillStyles, lineStyles, fillStyle0, fillStyle1, lineStyle, position) {
 	console.debug("convertFillEdges: startOffset:"+startOffset+" endOffset:"+endOffset);
 	var fillEdgesParts = [];
+	var lineEdgesParts = [];
 	var startOfRecord = shapeRecords[startOffset];
-	var fillEdges = [position.x, position.y];
+	var edges = [position.x / 20, position.y / 20];
 	console.debug('fillStyle0:'+fillStyle0);
-	console.debug('fillStyle1:'+fillStyle1);
+	console.debug('fillStyle1:'+fillStyle1)
+	console.debug('lineStyle:'+lineStyle);
 	for (var i = startOffset; i <= endOffset ; i++) {
 	    var record = shapeRecords[i];
 	    var hasEdges = false;
 	    if (record instanceof SWFSTRAIGHTEDGERECORD) {
 		// StraightFlag:1 - Straight Edge
-		fillEdges.push(1, record.X, record.Y);
+		edges.push(1, record.X / 20, record.Y / 20);
 		position.x = record.X;
 		position.y = record.Y;
 		hasEdges = true;
 	    } else if (record instanceof SWFCURVEDEDGERECORD) {
 		// StraightFlag:0 - CurvedEdge
-		fillEdges.push(0, record.ControlX, record.ControlY, record.AnchorX, record.AnchorY);
+		edges.push(0, record.ControlX / 20, record.ControlY/ 20, record.AnchorX / 20, record.AnchorY / 20);
 		position.x = record.AnchorX;
 		position.y = record.AnchorY;
 		hasEdges = true;
 	    }
 	    if ((record instanceof SWFSTYLECHANGERECORD) || (i === endOffset)) {
-		if (hasEdges && (fillEdges.length > 2)) {
+		if (hasEdges && (edges.length > 2)) {
 		    if (fillStyle0) {
 			if (! (fillStyle0 in fillEdgesParts)) {
 			    fillEdgesParts[fillStyle0] = [];
 			}
-			fillEdgesParts[fillStyle0].push(fillEdges);
+			fillEdgesParts[fillStyle0].push(edges);
 		    }
 		    if (fillStyle1) {
 			if (! (fillStyle1 in fillEdgesParts)) {
 			    fillEdgesParts[fillStyle1] = [];
 			}
-			fillEdgesParts[fillStyle1].push(fillEdges);
+			fillEdgesParts[fillStyle1].push(edges);
 		    }
-		    fillEdges = [];
+		    if (lineStyle) {
+			if (! (lineStyle in lineEdgesParts)) {
+			    fillEdgesParts[fillStyle1] = [];
+			}
+			fillEdgesParts[fillStyle1].push(edges);
+                    }
+		    edges = [];
 		}
 		if ('MoveX' in record) {
 		    position.x = record.MoveX;
 		    position.y = record.MoveY;
 		}
-		if (fillEdges.length === 0) {
-                    var fillEdges = [position.x, position.y];
+		if (edges.length === 0) {
+                    var edges = [position.x / 20, position.y / 20];
 		}
 	    }
 	}
 	// combining edges by style
 	var fillEdgesList = [];
+	var lineEdgesList = [];
 	for (var style in fillEdgesParts) {
 	    var fillEdges = fillEdgesParts[style];
 	    if (fillEdges.length <= 1) {
@@ -64,38 +73,18 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	    }
 	    
 	}
-//        console.debug('fillEdgesList');
-//        console.debug(fillEdgesList);
-	return fillEdgesList;
-    }
-    var convertLineEdges = function(shapeRecords, startOffset, endOffset, lineStyles, lineStyle, position) {
-	var lineEdgesList = []
-	//	console.debug("convertLineEdges: startOffset:"+startOffset+" endOffset:"+endOffset);
-	var lineEdges = [position.x, position.y];
-	var startOfShapeRecords = shapeRecords[startOffset]
-	if (startOfShapeRecords.LineStyle) {
-	    lineStyle = shapeRecords[startOffset].LineStyle;
-	}
-	for (var i = startOffset + 1 ; i <= endOffset ; i++) {
-	    var record = shapeRecords[i];
-	    if (record instanceof SWFSTYLECHANGERECORD || (i === endOffset)) {
-		if ((('LineStyle' in record) || 
-		     (lineStyle !== record.LineStyle)) ||
-		    (i === endOffset)) {
-		    if (lineStyle) {
-			lineEdgesList.push(lineStyles[lineStyle], lineEdges);
-		    }
-		    var lineEdges = [];
-		    lineStyle = record.LineStyle;
-		}
-	    } else {
-		lineEdges.push(record);
+	for (var style in lineEdgesParts) {
+	    var lineEdges = lineEdgesParts[style];
+            for (var i = 0, n = lineEdges.length ; i < n ; i++) {
+		lineEdgesList.push(lineStyles[style - 1]);
+		lineEdgesList.push(lineEdges[i]);
 	    }
 	}
-//        console.debug('lineEdgesList');
-//        console.debug(lineEdgesList);
-	return lineEdgesList;
+//        console.debug('fillEdgesList');
+//        console.debug(fillEdgesList);
+	return {fills:fillEdgesList, lines:lineEdgesList};
     }
+
     console.debug("SWFVector");
 //    console.debug(fillStyles);
 //    console.debug(lineStyles);
@@ -119,13 +108,12 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	    if (hasEdges) {
 		startOffset += 1;
 		endOffset = i - 1;
-		edgesWithFillStyles = convertFillEdges(shapeRecords, startOffset, endOffset, fillStyles, fillStyle0, fillStyle1, position);
-		edgesWithLineStyles = convertLineEdges(shapeRecords, startOffset, endOffset, lineStyles, lineStyle, position);
-                for (var j = 0, m = edgesWithFillStyles.length ; j < m ; j++) {
-                    fills.push(edgesWithFillStyles[j]);
+		edgesWithStyles = convertEdges(shapeRecords, startOffset, endOffset, fillStyles, lineStyles, fillStyle0, fillStyle1, lineStyle, position);
+                for (var j = 0, m = edgesWithStyles.fills.length ; j < m ; j++) {
+                    fills.push(edgesWithStyles.fills[j]);
                 }
-                for (var j = 0, m = edgesWithLineStyles.length ; j < m ; j++) {
-                    lines.push(edgesWithLineStyles[j]);
+                for (var j = 0, m = edgesWithStyles.lines.length ; j < m ; j++) {
+                    lines.push(edgesWithStyles.lines[j]);
                 }
 		hasEdges = false;
 	    }
