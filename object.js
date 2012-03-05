@@ -32,6 +32,11 @@ var SWFObject = function() {
             var character = chara.getCharacter(place.CharacterId);
             console.debug('character:'+place.CharacterId);
             console.debug(character);
+            if (character.vectors) {
+                canvas.drawVectors(character);
+            } else {
+                ;
+            }
         }
     }
     this.playTick = function(player, chara, canvas, action, event) {
