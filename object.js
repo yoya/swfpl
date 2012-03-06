@@ -8,6 +8,12 @@ var SWFObject = function() {
     var playing = true;
     var nextFrame = 0;
     var labelTable;
+    this.parent = this;
+    this.childList = [];
+    this.addChild = function(childObject) {
+        childObject.parent = this;
+        this.childList.push(childObject);
+    }
     this.appendTag = function(tag) {
         controlTags.push(tag);
     }

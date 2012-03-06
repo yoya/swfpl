@@ -157,7 +157,9 @@ var SWFLoader = function(url, chara, object, player) {
 		tag = new SWFDefineEditText(bitio, tag_code, length);
 		break;
 	    case 39: // DefineSprite
-		tag = new SWFDefineSprite(bitio, tag_code, length);
+                var childObject = new SWFObject();
+                object.addChild(childObject);
+		tag = new SWFDefineSprite(bitio, tag_code, length, chara, childObject, player);
                 chara.appendSpriteTag(tag);
 		break;
 	    case 43: // FrameLabel

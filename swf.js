@@ -635,13 +635,13 @@ var SWFDefineEditText = function(bs, tag_code, length) { // code:37
     }
 }
 
-var SWFDefineSprite = function(bs, tag_code, length) { // code:39
-    var parser = new SWFParser(null);
+var SWFDefineSprite = function(bs, tag_code, length, chara, object, player) { // code:39
+    var parser = new SWFLoader();
     this.tag_code = tag_code;
     this.tag_length =  length;
     this.SpriteID = bs.getUI16LE();
     this.FrameCount = bs.getUI16LE();
-    this.ControlTags = parser.parseTags(bs);
+    this.ControlTags = parser.parseSWFTags(bs, chara, object, player);
 }
 
 var SWFFrameLabel = function(bs, tag_code, length) { // code:43
