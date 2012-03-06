@@ -23,6 +23,7 @@ var SWFObject = function() {
             return ; // nothing to do
         }
         depthList = depthList.sort();
+        canvas.clear(); // must be dirty rectangle
         for (var i = 0, n = depthList.length ; i < n ; i++) {
             var depth = depthList[i];
 	    //            console.log('depth:'+depth);
@@ -32,8 +33,9 @@ var SWFObject = function() {
             var character = chara.getCharacter(place.CharacterId);
             console.debug('character:'+place.CharacterId);
             console.debug(character);
+            console.debug(place.Matrix);
             if (character.vectors) {
-                canvas.drawVectors(character);
+                canvas.drawVectors(character, place.Matrix, chara);
             } else {
                 ;
             }
