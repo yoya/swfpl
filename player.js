@@ -8,7 +8,7 @@ function SWFPlayer(canvas_id) {
         this.loader = new SWFLoader(url, chara, object, this);
     }
     this.setBackgroundColor = function(color) {
-        this.backgroundColor = color;
+        canvas.setBackgroundColor(color);
     }
     this.play = function(player) {
         if (typeof player === 'undefined') {
