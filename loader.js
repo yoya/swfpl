@@ -132,7 +132,7 @@ var SWFLoader = function(url, chara, object, player) {
 		break;
 	    case 9: // SetBackgroundColor
 		tag = new SWFSetBackgroundColor(bitio, tag_code, length);
-                player.setBackgroundColor(tag.backgroundColor);
+                player.setBackgroundColor(tag.BackgroundColor);
 		break;
 	    case 10: // DefineFont
 	    case 48: // DefineFont2
