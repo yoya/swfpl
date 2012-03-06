@@ -16,25 +16,25 @@ var SWFMATRIX = function(bs) {
 	this.HasScale = bs.getUIBit();
 	if (this.HasScale) {
 	    var nScaleBits = bs.getUIBits(5);
-	    this.NScaleBits = nScaleBits;
-	    this.ScaleX = bs.getSIBits(nScaleBits);
-	    this.ScaleY = bs.getSIBits(nScaleBits);
+//	    this.NScaleBits = nScaleBits;
+	    this.ScaleX = bs.getSIBits(nScaleBits) / 0x10000;
+	    this.ScaleY = bs.getSIBits(nScaleBits) / 0x10000;
 	} else {
-	    this.ScaleX = 0x10000;
-	    this.ScaleY = 0x10000;
+	    this.ScaleX = 1;
+	    this.ScaleY = 1;0x10000;
         }
 	this.HasRotate = bs.getUIBit();
 	if (this.HasRotate) {
 	    var nRotateBits = bs.getUIBits(5);
-	    this.NRotateBits = nRotateBits;
-	    this.RotateSkew0 = bs.getSIBits(nRotateBits);
-	    this.RotateSkew1 = bs.getSIBits(nRotateBits);
+//	    this.NRotateBits = nRotateBits;
+	    this.RotateSkew0 = bs.getSIBits(nRotateBits) / 0x10000;
+	    this.RotateSkew1 = bs.getSIBits(nRotateBits) / 0x10000;
 	} else {
 	    this.RotateSkew0 = 0;
 	    this.RotateSkew1 = 0;
         }
 	var nTranslateBits = bs.getUIBits(5);
-	this.NTranslateBits = nTranslateBits;
+//	this.NTranslateBits = nTranslateBits;
 	this.TranslateX = bs.getSIBits(nTranslateBits);
 	this.TranslateY = bs.getSIBits(nTranslateBits);
 }
