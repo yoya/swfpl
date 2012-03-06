@@ -6,6 +6,11 @@ var SWFCanvas = function(canvas_id) {
     this.clear = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
+    this.setBackgroundColor = function(rgb) {
+        console.debug("SWFCanvas::setBackgroundColor");
+        var cssText = "rgb("+rgb.Red+","+rgb.Green+","+rgb.Blue+")";
+        canvas.style.backgroundColor = cssText;
+    }
     this.drawVectors = function(character, matrix, chara) {
         console.debug("SWFCanvas::drawVector");
         var bounds = character.bounds;
