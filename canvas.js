@@ -42,13 +42,18 @@ var SWFCanvas = function(canvas_id) {
                     case 0x41:
                     case 0x42:
                     case 0x43:
-                        var bitmap = chara.getCharacter(style.BitmapId);
-                        if ((fillStyleType === 0x40) || (fillStyleType === 0x42)) {
-                            var pattern = ctx.createPattern(bitmap.image,'repeat');
+                        var bitmapId = style.BitmapId;
+                        if (bitmapId === 65535) {
+                            var fillStyle = "rgba(255, 0, 0, 255)";
                         } else {
-                            var pattern = ctx.createPattern(bitmap.image,'no-repeat');
+                            var bitmap = chara.getCharacter(bitmapId);
+                            if ((fillStyleType === 0x40) || (fillStyleType === 0x42)) {
+                                var pattern = ctx.createPattern(bitmap.image,'repeat');
+                            } else {
+                                var pattern = ctx.createPattern(bitmap.image,'no-repeat');
+                            }
+                            fillStyle = pattern;
                         }
-                        fillStyle = pattern;
                         break;
                     default:
                         console.error("Unknown FillStyleType"+style.FillStyleType);
