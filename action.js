@@ -13,14 +13,18 @@ var SWFAction = function(object, parentAction) {
     }
     this.setProperty = function(num, value)  {
         switch (num) {
+        case 0: // _X
+        break;
 	default:
 	break;
 	}
     }
     this.getProperty = function(num)  {
         switch (num) {
+        case 0: // _X
+        break;
 	default:
-	break;
+        break;
 	}
     }
     this.doAction = function(tag) {
