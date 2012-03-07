@@ -17,7 +17,10 @@
   <canvas id="flashcanvas" width="240" height="240"> canvas is here</canvas>
   <script type="text/javascript">
   canvas_id = "flashcanvas";
-  url = "saitama1.swf";
+  var url = location.search.substr(1).split("&")[0];
+  if (! url) {
+      url = "saitama1.swf"; // default
+  }
   swfpl = new SWFPlayer(canvas_id);
   swfpl.load(url);
   swfpl.play();
