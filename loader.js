@@ -64,7 +64,10 @@ var SWFLoader = function(url, chara, object, player) {
     }
     this.parseSWFMovieHeader = function(bitio, player) {
         console.debug("SWFLoader::parseMovieSWFHeader");
-        player.frameSize  = new SWFRECT(bitio);
+        frameSize = new SWFRECT(bitio);
+        player.frameSize  = frameSize;
+        player.setBounds(frameSize.Xmin / 20, frameSize.Ymin / 20,
+                         frameSize.Xmax / 20, frameSize.Ymax / 20);
         player.frameRate  = bitio.getUI16LE() / 0x100;
         player.frameCount = bitio.getUI16LE();
         console.debug(player);

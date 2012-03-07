@@ -7,6 +7,9 @@ function SWFPlayer(canvas_id) {
     this.load = function(url) {
         this.loader = new SWFLoader(url, chara, object, this);
     }
+    this.setBounds = function(minX, minY, maxX, maxY) {
+        canvas.setBounds(minX, minY, maxX, maxY);
+    }
     this.setBackgroundColor = function(color) {
         canvas.setBackgroundColor(color);
     }
