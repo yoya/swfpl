@@ -31,7 +31,9 @@ var SWFCanvas = function(canvas_id) {
             minY = bounds.Ymin / 20;
         }
         ctx.save();
-        ctx.transform(matrix.ScaleX, matrix.RotateSkew1, matrix.RotateSkew0, matrix.ScaleY, minX + matrix.TranslateX / 20, minY + matrix.TranslateY / 20);
+        if (matrix) {
+            ctx.transform(matrix.ScaleX, matrix.RotateSkew1, matrix.RotateSkew0, matrix.ScaleY, minX + matrix.TranslateX / 20, minY + matrix.TranslateY / 20);
+        }
         this._drawVectors(vectors, minX, minY, chara);
         ctx.restore();
     }
