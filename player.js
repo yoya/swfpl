@@ -27,7 +27,7 @@ function SWFPlayer(canvas_id) {
     this.playTick = function(player, period) {
 //        console.debug("SWFPlayer::playTick:"+period);
         var timerId = setTimeout(player.playTick, period, player, period);
-        var ret = object.playTick(player, chara, canvas, action, event);
+        var ret = object.playTick(chara, canvas, action, event, player.frameCount);
         if (ret === false) {
             clearTimeout(timerId);
             setTimeout(player.playTick, 100, player, period); // quick retry

@@ -47,7 +47,7 @@ var SWFObject = function() {
             }
         }
     }
-    this.playTick = function(player, chara, canvas, action, event) {
+    this.playTick = function(chara, canvas, action, event, frameCount) {
         console.debug("SWFObject::playTick");
         if (this.framesLoaded <= currentFrame) {
             return false; // skip
@@ -94,10 +94,11 @@ var SWFObject = function() {
             }
         } while (tag.tag_code > 1);
         if (done) {
-            currentFrame = 0;
             controlTags_idx = 0;
-        } else {
-            currentFrame++;
+        }
+        currentFrame++;
+        if (currentFrame >= frameCount) {
+            currentFrame = 0;
         }
         return true;
     }
