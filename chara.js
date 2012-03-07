@@ -20,9 +20,7 @@ var SWFChara = function() {
         characterData[tag.CharacterID] = {image:img};
     }
     this.appendLosslessTag = function(tag) {
-        var img = new Image();
-	pngData = SWFLossless(tag.tag_code, tag.BitmapFormat, tag.BitmapWidth, tag.BitmapHeight, tag.BitmapColorTableSize, tag.ZlibBitmapData);
-	img.src = "data:image/png;base64,"+base64encode(pngData);
+	var img = SWFLossless(tag.tag_code, tag.BitmapFormat, tag.BitmapWidth, tag.BitmapHeight, tag.BitmapColorTableSize, tag.ZlibBitmapData);
         characterData[tag.CharacterID] = {image:img};
     }
     this.appendSpriteTag = function(tag) {

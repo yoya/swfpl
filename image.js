@@ -134,5 +134,9 @@ function SWFLossless(tag_code, format, width, height, colorTableSize, zlibBitmap
 	pngChunksWithCRC32.push(bitio.fromUI32BE(crc32(chunk)));
     }
     delete colorType;
-    return pngChunksWithCRC32.join("");
+    var pngData = pngChunksWithCRC32.join("");
+    delete pngChunksWithCRC32;
+    var img = new Image();
+    img.src = "data:image/png;base64,"+base64encode(pngData);
+    
 }
