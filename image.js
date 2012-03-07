@@ -1,6 +1,4 @@
-
 function SWFJpeg(imageData, jpegtables) {
-    var img = new Image();
     var bitio = new BitIO();
     bitio.input(imageData);
     var marker;
@@ -42,9 +40,7 @@ function SWFJpeg(imageData, jpegtables) {
     } else {
         dqt_dht = dqt + dht;
     }
-    var jpegData = "\xFF\xD8" + sof + dqt_dht + sos_eoi;
-    img.src = "data:image/jpeg;base64,"+base64encode(jpegData);
-    return img;
+    return "\xFF\xD8" + sof + dqt_dht + sos_eoi; // jpegData
 }
 
 
@@ -135,8 +131,5 @@ function SWFLossless(tag_code, format, width, height, colorTableSize, zlibBitmap
     }
     delete colorType;
     var pngData = pngChunksWithCRC32.join("");
-    delete pngChunksWithCRC32;
-    var img = new Image();
-    img.src = "data:image/png;base64,"+base64encode(pngData);
-    
+    return pngData;
 }
