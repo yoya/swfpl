@@ -3,6 +3,12 @@ var SWFCanvas = function(canvas_id) {
     this.width  = canvas.width;
     this.height = canvas.height;
     var ctx = canvas.getContext('2d');
+    this.createCanvas = function(width, height) {
+        var c = document.createElement('canvas');
+        c.width = width;
+        c.height = height;
+        return c;
+    }
     this.clear = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -46,11 +52,17 @@ var SWFCanvas = function(canvas_id) {
                         if (bitmapId === 65535) {
                             var fillStyle = "rgba(255, 0, 0, 255)";
                         } else {
+                            var matrix = style.BitmapMatrix;
                             var bitmap = chara.getCharacter(bitmapId);
+                            var image = bitmap.image;
+                            var c = this.createCanvas(image.width, image.height);
+                            var cx = c.getContext('2d');
+                            cx.transform(matrix.ScaleX / 20, matrix.RotateSkew1 / 20, matrix.RotateSkew0 / 20, matrix.ScaleY / 20, matrix.TranslateX / 20, matrix.TranslateY / 20);
+                            cx.drawImage(image, 0, 0);
                             if ((fillStyleType === 0x40) || (fillStyleType === 0x42)) {
-                                var pattern = ctx.createPattern(bitmap.image,'repeat');
+                                var pattern = ctx.createPattern(c, 'repeat');
                             } else {
-                                var pattern = ctx.createPattern(bitmap.image,'no-repeat');
+                                var pattern = ctx.createPattern(c, 'no-repeat');
                             }
                             fillStyle = pattern;
                         }
