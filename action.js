@@ -33,7 +33,7 @@ var SWFAction = function(object, parentAction) {
 	var bitio = new BitIO();
 	bitio.input(actions);
         var ret = {};
-	while (bitio.offset() < action_len) {
+	while (bitio.getOffset() < actions_len) {
 	    var actionCode = bitio.getUI8();
 	    var actionData = null;
 	    console.debug('actionCode:'+actionCode);
