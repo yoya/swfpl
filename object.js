@@ -49,6 +49,9 @@ var SWFObject = function() {
     }
     this.playTick = function(player, chara, canvas, action, event) {
         console.debug("SWFObject::playTick");
+        if (this.framesLoaded <= currentFrame) {
+            return ; // skip
+        }
         var done = false;
         do {
             var tag = controlTags[controlTags_idx++];
