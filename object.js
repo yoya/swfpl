@@ -55,6 +55,7 @@ var SWFObject = function() {
         if (chara.loaded() === false) {
             return false; // skip
         }
+        var actions = [];
         var done = false;
         do {
             var tag = controlTags[controlTags_idx++];
@@ -64,6 +65,9 @@ var SWFObject = function() {
                 break;
             case 1: // ShowFramen
                 this.showFrame(chara, canvas);
+                break;
+            case 12: // PlaceObject2
+                actions.push(tag);
                 break;
             case 26: // PlaceObject2
                 if (tag.PlaceFlagHasMove) {
@@ -96,9 +100,20 @@ var SWFObject = function() {
         if (done) {
             controlTags_idx = 0;
         }
-        currentFrame++;
-        if (currentFrame >= frameCount) {
-            currentFrame = 0;
+        var nextFrame = null;
+        for (var i = 0, n = actions.length ; i < n ; i++) {
+            var ret = action.doAction(actions[i]);
+            if (nextFrame in ret) {
+                nextFrame = ret.nextFrame;
+            }
+        }
+        if (nextFrame === null) {
+            currentFrame = nextFrame;
+        } else {
+            currentFrame++;
+            if (currentFrame >= frameCount) {
+                currentFrame = 0;
+            }
         }
         return true;
     }
