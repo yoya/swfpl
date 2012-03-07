@@ -18,8 +18,8 @@ var SWFObject = function() {
         controlTags.push(tag);
     }
     this.showFrame = function(chara, canvas) {
-        console.log("showFrame");
-        console.log(displayListTable);
+//        console.debug("showFrame");
+//        console.debug(displayListTable);
         var depthList = [];
         for (var depth in displayListTable) {
             depthList.push(depth);
@@ -32,14 +32,14 @@ var SWFObject = function() {
         canvas.clear(); // must be dirty rectangle
         for (var i = 0, n = depthList.length ; i < n ; i++) {
             var depth = depthList[i];
-	    //            console.log('depth:'+depth);
-	    //            console.log(depthList);
+	    //            console.debug('depth:'+depth);
+	    //            console.debug(depthList);
             var place = displayListTable[depth];
-            // console.log(place);
+            // console.debug(place);
             var character = chara.getCharacter(place.CharacterId);
-            console.debug('character:'+place.CharacterId);
-            console.debug(character);
-            console.debug(place.Matrix);
+//            console.debug('character:'+place.CharacterId);
+//            console.debug(character);
+//            console.debug(place.Matrix);
             if (character.vectors) {
                 canvas.drawVectors(character, place.Matrix, chara);
             } else {
@@ -90,7 +90,7 @@ var SWFObject = function() {
                 delete displayListTable[tag.Depth];
                 break;
             default:
-                console.log(tag);
+                console.debug(tag);
             }
         } while (tag.tag_code > 1);
         if (done) {

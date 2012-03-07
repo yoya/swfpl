@@ -23,11 +23,11 @@ var SWFCanvas = function(canvas_id) {
         canvas.style.backgroundColor = cssText;
     }
     this.drawVectors = function(character, matrix, chara) {
-        console.debug("SWFCanvas::drawVector");
+//        console.debug("SWFCanvas::drawVector");
         var bounds = character.bounds;
         var vectors = character.vectors;
-        console.debug(bounds);
-        console.debug(vectors);
+//        console.debug(bounds);
+//        console.debug(vectors);
         var minX = 0, minY = 0;
         if (bounds.Xmin < 0) {
             minX = bounds.Xmin / 20;
@@ -43,7 +43,7 @@ var SWFCanvas = function(canvas_id) {
         ctx.restore();
     }
     this._drawVectors = function(vectors, minX, minY, chara) {
-        console.debug("SWFCanvas::_drawVectors");
+//        console.debug("SWFCanvas::_drawVectors");
         for (var t = 0 ; t < 2 ; t++) {
             if (t === 0) {
                 edgesWithStyle = vectors.fills;
@@ -52,7 +52,7 @@ var SWFCanvas = function(canvas_id) {
             }
             var i = 0 , n = edgesWithStyle.length;
             while (i < n) {
-                console.debug(edgesWithStyle);
+//                console.debug(edgesWithStyle);
                 var style = edgesWithStyle[i++];
                 var fillStyle = "rgba(255, 0, 0, 255)"; // this is error.
                 var fillStyleType = style.FillStyleType;
@@ -92,7 +92,7 @@ var SWFCanvas = function(canvas_id) {
                 var edges = edgesWithStyle[i++];
                 ctx.beginPath();
                 ctx.moveTo(edges[0] - minX, edges[1] - minY);
-                console.debug("ctx.moveTo("+edges[0]+","+edges[1]+")");
+//                console.debug("ctx.moveTo("+edges[0]+","+edges[1]+")");
                 var j = 2, m = edges.length;
                 while (j < m) {
                     if (edges[j++]) {
