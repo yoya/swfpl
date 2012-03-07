@@ -1,0 +1,27 @@
+<html>
+ <head>
+  <script type="text/javascript" src="bitio.js"> </script>
+  <script type="text/javascript" src="swf.js"> </script>
+  <script type="text/javascript" src="utils.js"> </script>
+  <script type="text/javascript" src="canvas.js"> </script>
+  <script type="text/javascript" src="image.js"> </script>
+  <script type="text/javascript" src="vector.js"> </script>
+  <script type="text/javascript" src="chara.js"> </script>
+  <script type="text/javascript" src="object.js"> </script>
+  <script type="text/javascript" src="action.js"> </script>
+  <script type="text/javascript" src="loader.js"> </script>
+  <script type="text/javascript" src="event.js"> </script>
+  <script type="text/javascript" src="player.js"> </script>
+ </head>
+ <body>
+  <canvas id="flashcanvas" width="240" height="240"> canvas is here</canvas>
+  <script type="text/javascript">
+  canvas_id = "flashcanvas";
+  url = "ffxi2.swf";
+  swfpl = new SWFPlayer(canvas_id);
+  swfpl.load(url);
+  swfpl.play();
+  </script>
+ </body>
+</html>
+
