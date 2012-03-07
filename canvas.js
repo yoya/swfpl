@@ -23,12 +23,19 @@ var SWFCanvas = function(canvas_id) {
         var vectors = character.vectors;
         console.debug(bounds);
         console.debug(vectors);
+        var minX = 0, minY = 0;
+        if (bounds.Xmin < 0) {
+            minX = bounds.Xmin / 20;
+        }
+        if (bounds.Ymin < 0) {
+            minY = bounds.Ymin / 20;
+        }
         ctx.save();
-        ctx.transform(matrix.ScaleX, matrix.RotateSkew1, matrix.RotateSkew0, matrix.ScaleY, matrix.TranslateX / 20, matrix.TranslateY / 20);
-        this._drawVectors(vectors, chara);
+        ctx.transform(matrix.ScaleX, matrix.RotateSkew1, matrix.RotateSkew0, matrix.ScaleY, minX + matrix.TranslateX / 20, minY + matrix.TranslateY / 20);
+        this._drawVectors(vectors, minX, minY, chara);
         ctx.restore();
     }
-    this._drawVectors = function(vectors, chara) {
+    this._drawVectors = function(vectors, minX, minY, chara) {
         console.debug("SWFCanvas::_drawVectors");
         for (var t = 0 ; t < 2 ; t++) {
             if (t === 0) {
@@ -57,7 +64,7 @@ var SWFCanvas = function(canvas_id) {
                             var image = bitmap.image;
                             var c = this.createCanvas(image.width, image.height);
                             var cx = c.getContext('2d');
-                            cx.transform(matrix.ScaleX / 20, matrix.RotateSkew1 / 20, matrix.RotateSkew0 / 20, matrix.ScaleY / 20, matrix.TranslateX / 20, matrix.TranslateY / 20);
+                            cx.transform(matrix.ScaleX / 20, matrix.RotateSkew1 / 20, matrix.RotateSkew0 / 20, matrix.ScaleY / 20,  - minX + matrix.TranslateX / 20, - minY + matrix.TranslateY / 20);
                             cx.drawImage(image, 0, 0);
                             if ((fillStyleType === 0x40) || (fillStyleType === 0x42)) {
                                 var pattern = ctx.createPattern(c, 'repeat');
@@ -77,15 +84,15 @@ var SWFCanvas = function(canvas_id) {
                 }
                 var edges = edgesWithStyle[i++];
                 ctx.beginPath();
-                ctx.moveTo(edges[0], edges[1]);
+                ctx.moveTo(edges[0] - minX, edges[1] - minY);
                 console.debug("ctx.moveTo("+edges[0]+","+edges[1]+")");
                 var j = 2, m = edges.length;
                 while (j < m) {
                     if (edges[j++]) {
-                        ctx.lineTo(edges[j++], edges[j++]);
+                        ctx.lineTo(edges[j++] - minX, edges[j++] - minY);
                     } else {
-                        bezierCurveTo(edges[j++], edges[j++],
-                                      edges[j++], edges[j++]);
+                        bezierCurveTo(edges[j++] - minX, edges[j++] - minY,
+                                      edges[j++] - minX, edges[j++] - minY);
                     }
                 }
                 ctx.closePath();
