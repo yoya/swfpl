@@ -26,7 +26,11 @@ function SWFPlayer(canvas_id) {
     }
     this.playTick = function(player, period) {
 //        console.debug("SWFPlayer::playTick:"+period);
-        setTimeout(player.playTick, period, player, period);
-        object.playTick(player, chara, canvas, action, event);
+        var timerId = setTimeout(player.playTick, period, player, period);
+        var ret = object.playTick(player, chara, canvas, action, event);
+        if (ret === false) {
+            clearTimeout(timerId);
+            setTimeout(player.playTick, 100, player, period); // quick retry
+        }
     }
 }

@@ -50,7 +50,10 @@ var SWFObject = function() {
     this.playTick = function(player, chara, canvas, action, event) {
         console.debug("SWFObject::playTick");
         if (this.framesLoaded <= currentFrame) {
-            return ; // skip
+            return false; // skip
+        }
+        if (chara.loaded() === false) {
+            return false; // skip
         }
         var done = false;
         do {
@@ -96,6 +99,7 @@ var SWFObject = function() {
         } else {
             currentFrame++;
         }
+        return true;
     }
     this.play = function(label) {
 	console.error("SWFObject::play: not implemented yet. ");
