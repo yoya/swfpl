@@ -33,7 +33,7 @@ var SWFAction = function(object, parentAction) {
 	var bitio = new BitIO();
 	bitio.input(actions);
         var ret = {};
-	while (bitio.getOffset() < actions_len) {
+	while (bitio.getOffset().byte_offset < actions_len) {
 	    var actionCode = bitio.getUI8();
 	    var actionData = null;
 	    console.debug('actionCode:'+actionCode);
@@ -52,7 +52,7 @@ var SWFAction = function(object, parentAction) {
 		variables[stack.pop()] = stack.pop();
 		break;
 	    case 0x81: // GotoFrame
-                ret.nextFrame = toUI16LE(actionData);
+                ret.nextFrame = bitio.toUI16LE(actionData);
 		break;
 	    case 0x83: // GetURL
 		var params = actionData.split("\0");
