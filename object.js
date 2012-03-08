@@ -1,6 +1,7 @@
 var SWFObject = function() {
     this.framesLoaded = 0;
     var controlTags = []
+    var frameToTags_idx = {};
     var controlTags_idx = 0;
     var currentFrame = 0;
     var displayListTable = {}; // depth => ...
@@ -48,7 +49,7 @@ var SWFObject = function() {
         }
     }
     this.playTick = function(chara, canvas, action, event, frameCount) {
-        console.debug("SWFObject::playTick");
+        console.debug("SWFObject::playTick: "+currentFrame);
         if (this.framesLoaded <= currentFrame) {
             return false; // skip
         }
@@ -57,6 +58,7 @@ var SWFObject = function() {
         }
         var actions = [];
         var done = false;
+        frameToTags_idx[currentFrame] = controlTags_idx;
         do {
             var tag = controlTags[controlTags_idx++];
             switch (tag.tag_code) {
@@ -107,8 +109,9 @@ var SWFObject = function() {
                 nextFrame = ret.nextFrame;
             }
         }
-        if (nextFrame === null) {
+        if (nextFrame !== null) {
             currentFrame = nextFrame;
+            controlTags_idx = frameToTags_idx[currentFrame];
         } else {
             currentFrame++;
             if (currentFrame >= frameCount) {
