@@ -5,9 +5,7 @@ var SWFObject = function() {
     var controlTags_idx = 0;
     var currentFrame = 0;
     var displayListTable = {}; // depth => ...
-    var action = new SWFAction();
     var playing = true;
-    var nextFrame = 0;
     var labelTable;
     this.parent = this;
     this.childList = [];
@@ -68,7 +66,7 @@ var SWFObject = function() {
             case 1: // ShowFramen
                 this.showFrame(chara, canvas);
                 break;
-            case 12: // PlaceObject2
+            case 12: // DoAction
                 actions.push(tag);
                 break;
             case 26: // PlaceObject2
@@ -105,7 +103,7 @@ var SWFObject = function() {
         var nextFrame = null;
         for (var i = 0, n = actions.length ; i < n ; i++) {
             var ret = action.doAction(actions[i]);
-            if (nextFrame in ret) {
+            if ('nextFrame' in ret) {
                 nextFrame = ret.nextFrame;
             }
         }
@@ -121,11 +119,11 @@ var SWFObject = function() {
         }
         return true;
     }
-    this.play = function(label) {
+    this.play = function() {
 	console.error("SWFObject::play: not implemented yet. ");
         playing = true;
     }
-    this.stop = function(label) {
+    this.stop = function() {
         playing = false;
 	console.error("SWFObject::stop: not implemented yet. ");
     }
