@@ -116,6 +116,7 @@ var SWFObject = function() {
             currentFrame++;
             if (currentFrame >= frameCount) {
                 currentFrame = 0;
+                controlTags_idx = 0;
             }
         }
         return true;
