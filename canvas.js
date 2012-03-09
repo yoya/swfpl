@@ -12,6 +12,14 @@ var SWFCanvas = function(canvas_id) {
     this.clear = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
+    this.colorSWFtoCSS = function(color) {
+        if ('Alpha' in color) {
+            var alpha = color.Alpha;
+        } else {
+            var alpha = 255;
+        }
+        return "rgba("+color.Red+","+color.Green+","+color.Blue+","+alpha+")";
+    }
     this.setBounds = function(minX, minY, maxX, maxY) {
         // TODO: minX, minY
         canvas.width = maxX;
@@ -54,10 +62,13 @@ var SWFCanvas = function(canvas_id) {
             while (i < n) {
 //                console.debug(edgesWithStyle);
                 var style = edgesWithStyle[i++];
-                var fillStyle = "rgba(255, 0, 0, 255)"; // this is error.
-                var fillStyleType = style.FillStyleType;
                 if (t === 0) { // fill
+                    var fillStyle = "rgba(255, 0, 0, 255)"; // this is error.
+                    var fillStyleType = style.FillStyleType;
                     switch (fillStyleType) {
+                    case 0x00:
+                        fillStyle = this.colorSWFtoCSS(style.Color);
+                        break;
                     case 0x40:
                     case 0x41:
                     case 0x42:
@@ -82,12 +93,14 @@ var SWFCanvas = function(canvas_id) {
                         }
                         break;
                     default:
-                        console.error("Unknown FillStyleType"+style.FillStyleType);
+                        console.error("Unknown FillStyleType:"+style.FillStyleType);
                         break;
                     }
                     ctx.fillStyle = fillStyle;
                 } else { // line
-                    ctx.strokeStyle = "rgba(0,5, 0,5, 0,5, 1)";
+                    strokeStyle = this.colorSWFtoCSS(style.Color);
+                    ctx.strokeStyle = strokeStyle;
+                    ctx.lineWidth = style.Width;
                 }
                 var edges = edgesWithStyle[i++];
                 ctx.beginPath();
@@ -98,7 +111,7 @@ var SWFCanvas = function(canvas_id) {
                     if (edges[j++]) {
                         ctx.lineTo(edges[j++] - minX, edges[j++] - minY);
                     } else {
-                        bezierCurveTo(edges[j++] - minX, edges[j++] - minY,
+                        ctx.bezierCurveTo(edges[j++] - minX, edges[j++] - minY,
                                       edges[j++] - minX, edges[j++] - minY);
                     }
                 }
