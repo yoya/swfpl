@@ -64,7 +64,7 @@ var SWFObject = function() {
                 done = true;
                 break;
             case 1: // ShowFramen
-                this.showFrame(chara, canvas);
+//                this.showFrame(chara, canvas);
                 break;
             case 12: // DoAction
                 actions.push(tag);
@@ -107,6 +107,9 @@ var SWFObject = function() {
                 nextFrame = ret.nextFrame;
             }
         }
+        // showFrame
+        this.showFrame(chara, canvas);
+        //
         if (nextFrame !== null) {
             currentFrame = nextFrame;
             controlTags_idx = frameToTags_idx[currentFrame];
@@ -120,14 +123,9 @@ var SWFObject = function() {
         return true;
     }
     this.play = function() {
-	console.error("SWFObject::play: not implemented yet. ");
         playing = true;
     }
     this.stop = function() {
         playing = false;
-	console.error("SWFObject::stop: not implemented yet. ");
-    }
-    this.gotoLabel = function(label) {
-	console.error("SWFObject::gotoLabel: not implemented yet. ");
     }
 }
