@@ -1,4 +1,5 @@
 var SWFAction = function(object, parentAction) {
+    console.debug("SWFAction");
     var variables = {};
     var stack = [];
     this.setVariable = function(name, value)  {
