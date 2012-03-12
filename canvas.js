@@ -111,8 +111,8 @@ var SWFCanvas = function(canvas_id) {
                     if (edges[j++]) {
                         ctx.lineTo(edges[j++] - minX, edges[j++] - minY);
                     } else {
-                        ctx.bezierCurveTo(edges[j++] - minX, edges[j++] - minY,
-                                      edges[j++] - minX, edges[j++] - minY);
+                        ctx.quadraticCurveTo(edges[j++] - minX, edges[j++] - minY,
+                                             edges[j++] - minX, edges[j++] - minY);
                     }
                 }
                 ctx.closePath();
