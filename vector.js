@@ -10,9 +10,9 @@ var SWFVector = function(fillStyles, lineStyles, shapeRecords) {
 	var lineEdgesParts = [];
 	var startOfRecord = shapeRecords[startOffset];
 	var edges = [position.x / 20, position.y / 20];
-	console.debug('fillStyle0:'+fillStyle0);
-	console.debug('fillStyle1:'+fillStyle1)
-	console.debug('lineStyle:'+lineStyle);
+//	console.debug('fillStyle0:'+fillStyle0);
+//	console.debug('fillStyle1:'+fillStyle1)
+//	console.debug('lineStyle:'+lineStyle);
 	for (var i = startOffset; i <= endOffset ; i++) {
 	    var record = shapeRecords[i];
 	    var hasEdges = false;
