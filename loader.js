@@ -12,10 +12,12 @@ var SWFLoader = function(url, chara, object, player) {
                 }
             }            
         }
-        request.open('GET', url);
-        // http://javascript.g.hatena.ne.jp/edvakf/20100607/1275931930
-        request.overrideMimeType('text/plain; charset=x-user-defined');
-        request.send(null);
+        if (url)  {
+            request.open('GET', url);
+            // http://javascript.g.hatena.ne.jp/edvakf/20100607/1275931930
+            request.overrideMimeType('text/plain; charset=x-user-defined');
+            request.send(null);
+        }
     }
     var parse = function(swfdata, loader) {
         console.debug("SWFLoader::parse:"+swfdata.length);
