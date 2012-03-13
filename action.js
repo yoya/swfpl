@@ -50,7 +50,8 @@ var SWFAction = function(object, parentAction) {
 		object.stop();
 		break;
 	    case 0x1d: // SetVariables
-		variables[stack.pop()] = stack.pop();
+                var v = stack.pop();
+		variables[stack.pop()] = v;
 		break;
 	    case 0x81: // GotoFrame
                 ret.nextFrame = bitio.toUI16LE(actionData);
@@ -96,6 +97,7 @@ var SWFAction = function(object, parentAction) {
 		break;
 	    }
 	}
+//        console.debug(variables)
         return ret;
     }
 }
