@@ -68,7 +68,7 @@ var SWFAction = function(object, parentAction) {
 	    case 0x96: // Push
 		var bitio2 = new BitIO();
 		bitio2.input(actionData);
-		while (bitio2.offset() < actionLength) {
+		while (bitio2.getOffset().byte_offset < actionLength) {
 		    var v = null;
 		    switch (bitio2.getUI8()) {
 		    case 0: // string literal
