@@ -59,6 +59,7 @@ var SWFCanvas = function(canvas_id) {
                 edgesWithStyle = vectors.lines;
             }
             var i = 0 , n = edgesWithStyle.length;
+            ctx.beginPath();
             while (i < n) {
 //                console.debug(edgesWithStyle);
                 var style = edgesWithStyle[i++];
@@ -103,7 +104,6 @@ var SWFCanvas = function(canvas_id) {
                     ctx.lineWidth = style.Width;
                 }
                 var edges = edgesWithStyle[i++];
-                ctx.beginPath();
                 ctx.moveTo(edges[0] - minX, edges[1] - minY);
 //                console.debug("ctx.moveTo("+edges[0]+","+edges[1]+")");
                 var j = 2, m = edges.length;
@@ -115,12 +115,12 @@ var SWFCanvas = function(canvas_id) {
                                              edges[j++] - minX, edges[j++] - minY);
                     }
                 }
-                ctx.closePath();
-                if (t === 0) {
-                    ctx.fill();
-                } else {
-                    ctx.stroke();
-                }
+            }
+            ctx.closePath();
+            if (t === 0) {
+                ctx.fill();
+            } else {
+                ctx.stroke();
             }
         }
     }
